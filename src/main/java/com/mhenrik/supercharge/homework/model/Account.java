@@ -12,7 +12,7 @@ public class Account {
     private BigDecimal balance;
     private List<Transaction> transactions;
 
-    public Account(User user, BigDecimal balance) {
+    public Account(User user) {
         this.user = user;
         this.balance = OPENING_BALANCE;
         this.transactions = new ArrayList<>();
@@ -40,20 +40,25 @@ public class Account {
     }
 
     public void transfer(Account anotherAccount, BigDecimal amount) throws IllegalArgumentException {
-        if(checkBalance(amount) && anotherAccount != null){
+        if(anotherAccount == null) {
+            throw new IllegalArgumentException("Another account is not provided");
+        } else if (amount.compareTo(BigDecimal.ZERO) <= 0){
+            throw new IllegalArgumentException("Amount can't be less than zero!");
+        } else if (this.getBalance().subtract(amount).compareTo(BigDecimal.ZERO) <= 0){
+            throw new IllegalArgumentException("Insufficient funds");
+        } else {
             this.balance = this.balance.subtract(amount);
             anotherAccount.balance = anotherAccount.balance.add(amount);
-            Transaction transaction1 = new Transaction(TransactionType.TRANSFER, amount, this.balance);
+            Transaction transaction1 = new Transaction(TransactionType.TRANSFER, amount, this.getBalance());
             Transaction transaction2 = new Transaction(TransactionType.TRANSFER, amount, anotherAccount.getBalance());
             this.addToTransactions(transaction1);
             anotherAccount.addToTransactions(transaction2);
-        } else {
-            throw new IllegalArgumentException("Invalid parameters!");
         }
     }
 
     private boolean checkBalance(BigDecimal amount){
-        return amount.compareTo(BigDecimal.ZERO) > 0 && (this.getBalance().subtract(amount).compareTo(BigDecimal.ZERO) <= 0);
+
+        return amount.compareTo(BigDecimal.ZERO) > 0 && (this.getBalance().subtract(amount).compareTo(BigDecimal.ZERO) < 0);
     }
 
     private void addToTransactions(Transaction transaction){
