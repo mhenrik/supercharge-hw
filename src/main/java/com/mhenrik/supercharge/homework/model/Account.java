@@ -59,7 +59,6 @@ public class Account {
         }
     }
 
-
     private void addToTransactions(Transaction transaction){
         this.transactions.add(transaction);
     }
