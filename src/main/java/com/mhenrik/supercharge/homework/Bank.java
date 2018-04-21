@@ -4,6 +4,7 @@ import com.mhenrik.supercharge.homework.model.Account;
 import com.mhenrik.supercharge.homework.model.Transaction;
 import com.mhenrik.supercharge.homework.model.TransactionType;
 import com.mhenrik.supercharge.homework.model.User;
+import com.mhenrik.supercharge.homework.service.BankService;
 import com.mhenrik.supercharge.homework.service.HistoryService;
 import com.mhenrik.supercharge.homework.service.HistoryServiceDefault;
 
@@ -15,23 +16,24 @@ public class Bank {
 
     public static void main(String[] args) {
 
-        HistoryService historyService = new HistoryServiceDefault();
-
         User user1 = new User("user1");
         User user2 = new User("user2");
 
-        Account account1 = new Account(user1);
-        Account account2 = new Account(user2);
+        BankService bankService = new BankService();
 
-        account1.deposit(BigDecimal.valueOf(5000));
-        account2.deposit(BigDecimal.valueOf(5000));
+        Account account1 = bankService.createAccount(user1);
+        Account account2 = bankService.createAccount(user2);
 
-        account1.transfer(account2, BigDecimal.valueOf(1000));
+        bankService.deposit(account1, BigDecimal.valueOf(5000));
+        bankService.deposit(account2, BigDecimal.valueOf(5000));
 
-        System.out.println(account1.getBalance());
-        System.out.println(account2.getBalance());
+        bankService.transfer(account1, account2, BigDecimal.valueOf(2000));
 
-        List<Transaction> transactions = historyService.getHistory(account1, LocalDate.of(2018,4,19), LocalDate.of(2018, 4, 28));
+        System.out.println(bankService.getBalance(account1));
+        System.out.println(bankService.getBalance(account2));
+
+
+        List<Transaction> transactions = bankService.getHistory(account2, LocalDate.of(2018,4,19), LocalDate.of(2018, 4, 28));
 
         for (Transaction transaction : transactions) {
             System.out.println(transaction);
