@@ -20,22 +20,25 @@ public class Account {
 
 
     public void deposit(BigDecimal amount) throws IllegalArgumentException {
-        if (checkBalance(amount)){
+        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("You can't deposit less than 0!");
+        } else {
             this.balance = this.balance.add(amount);
             Transaction transaction = new Transaction(TransactionType.DEPOSIT, amount, this.balance);
             this.addToTransactions(transaction);
-        } else {
-            throw new IllegalArgumentException("Invalid amount");
         }
+
     }
 
     public void withdraw(BigDecimal amount) throws IllegalArgumentException {
-        if (checkBalance(amount)){
+        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("You can't withdraw less than 0!");
+        } else if (this.getBalance().subtract(amount).compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Insufficient funds");
+        } else {
             this.balance = this.balance.subtract(amount);
             Transaction transaction = new Transaction(TransactionType.WITHDRAWAL, amount, this.balance);
             this.addToTransactions(transaction);
-        } else {
-            throw new IllegalArgumentException("Invalid amount");
         }
     }
 
@@ -56,10 +59,6 @@ public class Account {
         }
     }
 
-    private boolean checkBalance(BigDecimal amount){
-
-        return amount.compareTo(BigDecimal.ZERO) > 0 && (this.getBalance().subtract(amount).compareTo(BigDecimal.ZERO) < 0);
-    }
 
     private void addToTransactions(Transaction transaction){
         this.transactions.add(transaction);

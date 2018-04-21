@@ -1,9 +1,6 @@
 package com.mhenrik.supercharge.homework.service;
 
-import com.mhenrik.supercharge.homework.model.Account;
-import com.mhenrik.supercharge.homework.model.Transaction;
-import com.mhenrik.supercharge.homework.model.TransactionType;
-import com.mhenrik.supercharge.homework.model.User;
+import com.mhenrik.supercharge.homework.model.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -13,10 +10,12 @@ public class BankService implements HistoryService, AccountService {
 
     private AccountService accountService;
     private HistoryService historyService;
+    private TransactionFormatter transactionFormatter;
 
     public BankService() {
         this.accountService = new AccountServiceDefault();
         this.historyService = new HistoryServiceDefault();
+        this.transactionFormatter = new TransactionFormatter();
     }
 
     public Account createAccount(User user){
@@ -41,26 +40,31 @@ public class BankService implements HistoryService, AccountService {
 
     @Override
     public BigDecimal getBalance(Account account) {
+        transactionFormatter.printBalance(account);
         return accountService.getBalance(account);
     }
 
     @Override
     public List<Transaction> getHistory(Account account) {
+        transactionFormatter.printTransaction(account, historyService.getHistory(account));
         return historyService.getHistory(account);
     }
 
     @Override
     public List<Transaction> getHistory(Account account, TransactionType transactionType) {
+        transactionFormatter.printTransaction(account, historyService.getHistory(account, transactionType));
         return historyService.getHistory(account, transactionType);
     }
 
     @Override
     public List<Transaction> getHistory(Account account, LocalDate from, LocalDate to) {
+        transactionFormatter.printTransaction(account, historyService.getHistory(account, from, to));
         return historyService.getHistory(account, from, to);
     }
 
     @Override
     public List<Transaction> getHistory(Account account, LocalDate from, LocalDate to, TransactionType transactionType) {
+        transactionFormatter.printTransaction(account, historyService.getHistory(account, from, to, transactionType));
         return historyService.getHistory(account, from, to, transactionType);
     }
 }

@@ -27,16 +27,15 @@ public class Bank {
         bankService.deposit(account1, BigDecimal.valueOf(5000));
         bankService.deposit(account2, BigDecimal.valueOf(5000));
 
+        bankService.withdraw(account1, BigDecimal.valueOf(1000));
+
         bankService.transfer(account1, account2, BigDecimal.valueOf(2000));
 
-        System.out.println(bankService.getBalance(account1));
-        System.out.println(bankService.getBalance(account2));
+        bankService.getBalance(account1);
+        bankService.getBalance(account2);
 
 
-        List<Transaction> transactions = bankService.getHistory(account2, LocalDate.of(2018,4,19), LocalDate.of(2018, 4, 28));
-
-        for (Transaction transaction : transactions) {
-            System.out.println(transaction);
-        }
+        bankService.getHistory(account1, LocalDate.of(2018,4,19), LocalDate.of(2018, 4, 28));
+        bankService.getHistory(account2, TransactionType.DEPOSIT);
     }
 }
