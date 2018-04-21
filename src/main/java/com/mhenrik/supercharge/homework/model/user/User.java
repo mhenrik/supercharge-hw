@@ -1,4 +1,4 @@
-package com.mhenrik.supercharge.homework.model;
+package com.mhenrik.supercharge.homework.model.user;
 
 import java.util.Objects;
 

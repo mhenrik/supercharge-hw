@@ -1,4 +1,6 @@
-package com.mhenrik.supercharge.homework.model;
+package com.mhenrik.supercharge.homework.model.transaction;
+
+import com.mhenrik.supercharge.homework.model.user.User;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

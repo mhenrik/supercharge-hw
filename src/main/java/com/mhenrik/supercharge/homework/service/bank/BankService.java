@@ -1,6 +1,14 @@
-package com.mhenrik.supercharge.homework.service;
+package com.mhenrik.supercharge.homework.service.bank;
 
-import com.mhenrik.supercharge.homework.model.*;
+import com.mhenrik.supercharge.homework.model.transaction.Account;
+import com.mhenrik.supercharge.homework.model.transaction.Transaction;
+import com.mhenrik.supercharge.homework.model.transaction.TransactionFormatter;
+import com.mhenrik.supercharge.homework.model.transaction.TransactionType;
+import com.mhenrik.supercharge.homework.model.user.User;
+import com.mhenrik.supercharge.homework.service.account.AccountService;
+import com.mhenrik.supercharge.homework.service.account.AccountServiceDefault;
+import com.mhenrik.supercharge.homework.service.history.HistoryService;
+import com.mhenrik.supercharge.homework.service.history.HistoryServiceDefault;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

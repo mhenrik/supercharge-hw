@@ -1,8 +1,8 @@
-package com.mhenrik.supercharge.homework.service;
+package com.mhenrik.supercharge.homework.service.history;
 
-import com.mhenrik.supercharge.homework.model.Account;
-import com.mhenrik.supercharge.homework.model.Transaction;
-import com.mhenrik.supercharge.homework.model.TransactionType;
+import com.mhenrik.supercharge.homework.model.transaction.Account;
+import com.mhenrik.supercharge.homework.model.transaction.Transaction;
+import com.mhenrik.supercharge.homework.model.transaction.TransactionType;
 
 import java.time.LocalDate;
 import java.util.List;

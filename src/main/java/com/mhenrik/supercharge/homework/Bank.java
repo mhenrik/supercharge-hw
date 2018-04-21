@@ -1,9 +1,9 @@
 package com.mhenrik.supercharge.homework;
 
-import com.mhenrik.supercharge.homework.model.Account;
-import com.mhenrik.supercharge.homework.model.TransactionType;
-import com.mhenrik.supercharge.homework.model.User;
-import com.mhenrik.supercharge.homework.service.BankService;
+import com.mhenrik.supercharge.homework.model.transaction.Account;
+import com.mhenrik.supercharge.homework.model.transaction.TransactionType;
+import com.mhenrik.supercharge.homework.model.user.User;
+import com.mhenrik.supercharge.homework.service.bank.BankService;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

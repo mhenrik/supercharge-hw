@@ -1,5 +1,7 @@
 package com.mhenrik.supercharge.homework.model;
 
+import com.mhenrik.supercharge.homework.model.transaction.Account;
+import com.mhenrik.supercharge.homework.model.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

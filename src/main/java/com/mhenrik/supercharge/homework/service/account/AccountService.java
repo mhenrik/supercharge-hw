@@ -1,6 +1,6 @@
-package com.mhenrik.supercharge.homework.service;
+package com.mhenrik.supercharge.homework.service.account;
 
-import com.mhenrik.supercharge.homework.model.Account;
+import com.mhenrik.supercharge.homework.model.transaction.Account;
 
 import java.math.BigDecimal;
 
