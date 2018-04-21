@@ -22,43 +22,39 @@ public class Account {
 
 
     public void deposit(BigDecimal amount) throws IllegalArgumentException {
-        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("You can't deposit less than 0!");
-        } else {
+        if (checkAmount(amount)) {
             this.balance = this.balance.add(amount);
             Transaction transaction = new Transaction(TransactionType.DEPOSIT, amount, this.balance);
             this.addToTransactions(transaction);
+        } else {
+            throw new IllegalArgumentException("You can't deposit less than 0!");
         }
 
     }
 
     public void withdraw(BigDecimal amount) throws IllegalArgumentException {
-        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("You can't withdraw less than 0!");
-        } else if (this.getBalance().subtract(amount).compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("Insufficient funds");
-        } else {
+        if (checkAmount(amount) && checkBalance(amount)){
             this.balance = this.balance.subtract(amount);
             Transaction transaction = new Transaction(TransactionType.WITHDRAWAL, amount, this.balance);
             this.addToTransactions(transaction);
+        } else {
+            throw new IllegalArgumentException("Invalid amount!");
         }
+
     }
 
     public void transfer(Account anotherAccount, BigDecimal amount) throws IllegalArgumentException {
-        if(anotherAccount == null) {
-            throw new IllegalArgumentException("Another account is not provided");
-        } else if (amount.compareTo(BigDecimal.ZERO) <= 0){
-            throw new IllegalArgumentException("Amount can't be less than zero!");
-        } else if (this.getBalance().subtract(amount).compareTo(BigDecimal.ZERO) <= 0){
-            throw new IllegalArgumentException("Insufficient funds");
-        } else {
+        if (checkBalance(amount) && checkAmount(amount) && anotherAccount != null){
             this.balance = this.balance.subtract(amount);
             anotherAccount.balance = anotherAccount.balance.add(amount);
             Transaction transaction1 = new Transaction(TransactionType.TRANSFER, amount, this.getBalance());
             Transaction transaction2 = new Transaction(TransactionType.TRANSFER, amount, anotherAccount.getBalance());
             this.addToTransactions(transaction1);
             anotherAccount.addToTransactions(transaction2);
+        } else {
+            throw new IllegalArgumentException("Invalid argument!");
         }
+
     }
 
     private void addToTransactions(Transaction transaction){
@@ -75,5 +71,19 @@ public class Account {
 
     public BigDecimal getBalance() {
         return balance;
+    }
+
+    private boolean checkAmount(BigDecimal amount){
+        if(amount.compareTo(BigDecimal.ZERO) <= 0) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkBalance(BigDecimal amount){
+        if(this.getBalance().subtract(amount).compareTo(BigDecimal.ZERO) <= 0){
+            return false;
+        }
+        return true;
     }
 }
